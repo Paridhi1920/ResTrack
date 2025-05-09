@@ -1,0 +1,9 @@
+Flask
+flask-cors
+scikit-learn
+pandas
+nltk
+joblib
+python-docx
+openpyxl
+requests

@@ -1,0 +1,49 @@
+/* RecruiterForm.css */
+
+.recruiter-form {
+    background-color: #0b1f3a; /* Dark Blue Background */
+    color: white;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .recruiter-form label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
+  
+  .recruiter-form textarea,
+  .recruiter-form input[type="file"],
+  .recruiter-form input[type="number"] {
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000;
+    font-size: 1rem;
+  }
+  
+  .recruiter-form button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .recruiter-form button:hover {
+    background-color: #0f5bc7;
+  }
+  
