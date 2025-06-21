@@ -4,6 +4,8 @@ import RoleSelection from './components/RoleSelection';
 import UploadForm from './components/JobSeeker/UploadForm';
 import RecruiterForm from './components/Recruiter/RecruiterForm';
 import AuthForm from './components/AuthForm';
+import Home from './components/Home';
+import About from './components/About';
 import { auth } from './firebase';
 
 const App = () => {
@@ -12,7 +14,7 @@ const App = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      console.log("Current Firebase user:", currentUser); 
+      console.log("Current Firebase user:", currentUser);
       setUser(currentUser);
       setLoading(false);
     });
@@ -24,8 +26,17 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={user ? <RoleSelection /> : <Navigate to="/auth" />} />
-        <Route path="/auth" element={user ? <Navigate to="/" /> : <AuthForm />} /> {/* 👈 Added redirect for logged-in users */}
+        {/* Home Page: always accessible */}
+        <Route path="/" element={<Home />} />
+
+        {/* About: always accessible */}
+        <Route path="/about" element={<About />} />
+
+        {/* Login/Signup */}
+        <Route path="/auth" element={<AuthForm />} />
+
+        {/* Protected Routes */}
+        <Route path="/select-role" element={user ? <RoleSelection /> : <Navigate to="/auth" />} />
         <Route path="/jobseeker" element={user ? <UploadForm /> : <Navigate to="/auth" />} />
         <Route path="/recruiter" element={user ? <RecruiterForm /> : <Navigate to="/auth" />} />
       </Routes>

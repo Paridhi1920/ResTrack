@@ -1,88 +1,65 @@
-import React, { useState } from "react";
-import { auth, provider } from "../firebase";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
+import React, { useState } from 'react';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const AuthForm = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // 👈 Add this
 
-  const handleAuth = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, pass);
-        alert("Login successful ✅");
+        await signInWithEmailAndPassword(auth, email, password);
       } else {
-        await createUserWithEmailAndPassword(auth, email, pass);
-        alert("Signup successful ✅");
+        await createUserWithEmailAndPassword(auth, email, password);
       }
-    } catch (err) {
-      alert("❌ Error: " + err.message);
-    }
-  };
-
-  const handleGoogle = async () => {
-    try {
-      await signInWithPopup(auth, provider);
-      alert("Google Login successful ✅");
-    } catch (err) {
-      alert("❌ Error: " + err.message);
+      // ✅ After successful login/signup → Go to Role Selection page
+      navigate('/select-role');
+    } catch (error) {
+      alert(error.message);
     }
   };
 
   return (
-    <form
-      onSubmit={handleAuth}
-      className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg"
-    >
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        {isLogin ? "Login" : "Signup"}
-      </h2>
-      <input
-        className="w-full p-2 border mb-4 rounded"
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        className="w-full p-2 border mb-4 rounded"
-        type="password"
-        placeholder="Password"
-        value={pass}
-        onChange={(e) => setPass(e.target.value)}
-        required
-      />
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-      >
-        {isLogin ? "Login" : "Signup"}
-      </button>
-
-      <button
-        type="button"
-        onClick={handleGoogle}
-        className="w-full mt-3 bg-red-600 text-white py-2 rounded hover:bg-red-700"
-      >
-        Continue with Google
-      </button>
-
-      <p
-        className="mt-4 text-center text-sm text-blue-500 cursor-pointer"
-        onClick={() => setIsLogin(!isLogin)}
-      >
-        {isLogin
-          ? "New user? Signup here"
-          : "Already have an account? Login"}
-      </p>
-    </form>
+    <div className="min-h-screen bg-blue-950 text-white flex items-center justify-center px-4">
+      <div className="bg-blue-900 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">{isLogin ? 'Login' : 'Signup'}</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full px-4 py-2 rounded bg-blue-800 text-white border border-blue-700 focus:outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 rounded bg-blue-800 text-white border border-blue-700 focus:outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-white text-blue-900 py-2 rounded hover:bg-blue-100 font-semibold transition"
+          >
+            {isLogin ? 'Login' : 'Signup'}
+          </button>
+        </form>
+        <p
+          className="mt-4 text-center cursor-pointer text-blue-300 hover:underline"
+          onClick={() => setIsLogin(!isLogin)}
+        >
+          {isLogin ? 'New here? Create an account' : 'Already have an account? Login'}
+        </p>
+      </div>
+    </div>
   );
 };
 
