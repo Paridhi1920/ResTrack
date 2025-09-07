@@ -7,3 +7,4 @@ joblib
 python-docx
 openpyxl
 requests
+PyPDF2
