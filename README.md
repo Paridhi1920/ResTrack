@@ -27,4 +27,3 @@ It helps candidates **analyze resumes, get ATS scores, generate cover letters, a
 - **Machine Learning:** Scikit-learn, NLTK,NLP 
 - **Authentication:** Firebase 
 
-[🌐 Live Demo](https://your-live-link.com)
